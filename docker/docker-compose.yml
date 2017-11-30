@@ -1,0 +1,61 @@
+version: '3.0'
+services:
+  bouncr1:
+    build: ./bouncr
+    ports: 
+      - 3001:3000
+    environment:
+      JDBC_URL: jdbc:mysql://bouncr1_mysql:3306/bouncr
+      JDBC_USER: bouncr
+      JDBC_PASSWORD: bouncr
+    links:
+      - bouncr1_mysql
+    volumes:
+      - ../bouncr1:/workspace/bouncr
+  
+  bouncr1_mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bouncr
+      MYSQL_USER: bouncr
+      MYSQL_PASSWORD: bouncr
+    volumes:
+      - ../mysql1:/var/lib/mysql
+
+  back-channeling:
+    build: ./back-channeling
+    ports: 
+      - 3009:3009
+    links:
+      - datomic
+    volumes:
+      - ../back-channeling:/workspace/back-channeling
+  
+  datomic:
+    build: ./datomic
+    volumes:
+      - ../datomic:/opt/datomic-free-0.9.5651/data
+
+  bouncr2:
+    build: ./bouncr
+    ports: 
+      - 3002:3000
+    environment:
+      JDBC_URL: jdbc:mysql://bouncr2_mysql:3306/bouncr
+      JDBC_USER: bouncr
+      JDBC_PASSWORD: bouncr
+    links:
+      - bouncr1_mysql
+    volumes:
+      - ../bouncr2:/workspace/bouncr
+  
+  bouncr2_mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bouncr
+      MYSQL_USER: bouncr
+      MYSQL_PASSWORD: bouncr
+    volumes:
+      - ../mysql2:/var/lib/mysql
