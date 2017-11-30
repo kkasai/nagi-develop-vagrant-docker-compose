@@ -1,0 +1,22 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/centos-7.3"
+
+  config.vm.network "forwarded_port", guest: 3001, host: 3001
+  config.vm.network "forwarded_port", guest: 3002, host: 3002
+
+  config.vm.synced_folder "../docker", "/workspace/docker"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    yum install -y tmux
+    yum install -y git
+  SHELL
+  config.vm.provision :docker
+  config.vm.provision :docker_compose, yml: "/workspace/docker/docker-compose.yml"
+end
