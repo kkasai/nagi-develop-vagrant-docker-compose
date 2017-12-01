@@ -4,7 +4,7 @@ services:
     build: ./bouncr
     ports: 
       - 3001:3000
-    env_file: .env
+    # env_file: .env
     environment:
       JDBC_URL: jdbc:mysql://bouncr1_mysql:3306/bouncr
       JDBC_USER: bouncr
@@ -28,7 +28,7 @@ services:
     build: ./back-channeling
     ports: 
       - 3009:3009
-    env_file: .env
+    # env_file: .env
     links:
       - datomic
     volumes:
@@ -43,7 +43,7 @@ services:
     build: ./bouncr
     ports: 
       - 3002:3000
-    env_file: .env
+    # env_file: .env
     environment:
       JDBC_URL: jdbc:mysql://bouncr2_mysql:3306/bouncr
       JDBC_USER: bouncr
