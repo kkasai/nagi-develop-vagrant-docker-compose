@@ -1,2 +1,4 @@
 docker/.env
 vagrant/.vagrant
+vagrant/.env
+vagrant/ansible/playbook.retry
