@@ -39,6 +39,14 @@ services:
     volumes:
       - ../datomic:/opt/datomic-free-0.9.5651/data
 
+  play-catch:
+    build: ./play-catch
+    ports:
+      - 3003:3003
+    # env_file: .env
+    volumes:
+      - ../play-catch:/workspace/play-catch
+
   bouncr2:
     build: ./bouncr
     ports: 
